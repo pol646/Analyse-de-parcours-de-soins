@@ -1,7 +1,15 @@
----
-title: "parcours-soins-IC"
----
+# Analyse des parcours de soins en Insuffisance Cardiaque
 
-This is a Quarto website.
+Ce projet analyse les trajectoires de soins de patients 
+hospitalisés pour insuffisance cardiaque sur 52 semaines, 
+à partir des données du SNDS.
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+## Objectif
+Identifier des profils types de parcours de soins 
+par méthodes de clustering non supervisé.
+
+## Données
+- Source : SNDS (Système National des Données de Santé)
+- Population : patients avec au moins une hospitalisation 
+  cardiaque (GHM 05xxx)
+- Suivi : 52 semaines post-hospitalisation index
