@@ -1,0 +1,185 @@
+---
+title: "Méthodologie"
+format: html
+toc: true
+---
+
+# Méthodologie
+
+## 1. Données et population
+
+Les données utilisées sont issues du **Système National des Données de Santé (SNDS)**,
+qui retrace l'ensemble des remboursements de soins de la population française.
+
+La population étudiée est constituée de patients ayant eu au moins une
+**hospitalisation cardiaque** (GHM commençant par 05), considérée comme
+l'événement index. Le suivi couvre **52 semaines** (1 an) à partir de cette
+première hospitalisation.
+
+---
+
+## 2. Construction des séquences de soins
+
+### 2.1 Codage des états
+
+Chaque acte de soin est recodé en un état selon la priorité suivante :
+
+| État | Signification | Critère |
+|------|--------------|---------|
+| H1 | Hospitalisation cardiaque | GHM 05xxx |
+| H2 | Hospitalisation non cardiaque | Autre GHM |
+| T | Téléconsultation | PRS_NAT_REF ∈ {1191, 1192, 1086} |
+| M | Médecin généraliste | PRS_NAT_REF = 1110 |
+| I | Infirmier | PSE_ACT_NAT = 24 |
+| P | Paramédical (kiné, sage-femme) | PSE_ACT_NAT ∈ {26, 21} |
+| PH | Pharmacie | PSE_ACT_NAT = 50 |
+| L | Laboratoire | PSE_ACT_NAT = 30 |
+| S | Spécialiste | PSE_SPE_COD ∈ {22, 23, 12, 15, 33} |
+| R | Aucun soin (repos) | Semaine sans acte |
+| F | Fin de suivi (décès ou sortie) | Après dernier acte ou date de décès |
+
+### 2.2 Agrégation hebdomadaire
+
+Les soins sont agrégés à la **semaine**. Lorsque plusieurs types de soins
+ont lieu la même semaine, les états sont combinés (ex. `H1+PH` si une
+hospitalisation cardiaque et une pharmacie ont lieu la même semaine).
+La priorité est donnée à H1, puis H2, puis les autres états triés
+alphabétiquement.
+
+### 2.3 Ancrage temporel
+
+Chaque séquence est **ancrée sur la première hospitalisation cardiaque**
+(S0 = H1 pour tous les patients). Les semaines suivantes (S1 à S51)
+décrivent l'évolution du parcours sur 1 an.
+
+### 2.4 Gestion de la fin de suivi
+
+L'état **F** (fin de suivi) est ajouté à partir de la semaine suivant
+le dernier acte enregistré, ou à partir de la date de décès si disponible,
+jusqu'à S51. Les patients dont le suivi couvre toute la période
+(jusqu'au 1er janvier 2025) ne reçoivent pas d'état F.
+
+---
+
+## 3. Représentation des données
+
+Trois représentations ont été comparées :
+
+### 3.1 Séquences brutes (retenue)
+
+Chaque patient est représenté par une **séquence de 52 symboles**
+(S0 à S51), traitée directement par le package TraMineR. Cette
+représentation préserve l'ordre temporel des événements, ce qui est
+essentiel pour capturer la dynamique du parcours de soins.
+
+### 3.2 One-Hot Encoding (écarté)
+
+Les séquences ont également été transformées en une **matrice binaire**
+de 52 × 10 = 520 colonnes. Cette approche a été écartée car elle ignore
+la temporalité des événements : deux patients avec les mêmes soins dans
+un ordre différent auraient la même représentation, ce qui n'a pas de
+sens clinique.
+
+### 3.3 Analyse des Correspondances Multiples - ACM (exploratoire)
+
+L'ACM a été testée sur le One-Hot Encoding converti en variables
+catégorielles, puis suivie d'une HCPC. Bien qu'intéressante pour la
+réduction de dimensionnalité, cette approche souffre des mêmes
+limitations que le OHE concernant la perte d'information temporelle.
+
+---
+
+## 4. Mesure de distance entre séquences
+
+### 4.1 Distance de Hamming (exploratoire)
+
+La distance de Hamming compte le **nombre de positions différentes**
+entre deux séquences. Simple et rapide, elle a été testée en première
+approche mais présente une limite importante : elle ne tient pas compte
+de l'ordre des événements et traite toutes les substitutions de manière
+identique.
+
+### 4.2 Optimal Matching (retenu)
+
+La distance **Optimal Matching (OM)** calcule le coût minimal pour
+transformer une séquence en une autre via des opérations d'insertion,
+suppression (indel) et substitution. C'est la méthode de référence en
+analyse de séquences biomédicales car elle respecte la structure
+temporelle des parcours.
+
+La matrice de substitution a été calculée par la méthode **TRATE**
+(basée sur les taux de transition observés dans les données) :
+plus deux états se succèdent souvent, plus leur substitution est
+peu coûteuse.
+
+Une personnalisation supplémentaire a été appliquée : les états
+**R et F**, considérés comme des états "passifs" sans signification
+clinique active, se voient attribuer un coût de substitution réduit
+(0.1 au lieu de 2), afin que leur présence n'écrase pas les
+différences cliniquement pertinentes entre parcours.
+
+---
+
+## 5. Algorithmes de clustering
+
+### 5.1 CAH Ward D2 (retenu)
+
+La **Classification Ascendante Hiérarchique** avec critère de Ward D2
+a été appliquée directement sur la matrice de distances OM. Elle
+présente plusieurs avantages dans ce contexte :
+
+- **Déterministe** : elle produit toujours le même résultat
+- **Hiérarchique** : le dendrogramme permet de visualiser toutes
+  les découpages possibles et de choisir k de manière éclairée
+- **Pas de contrainte sur la forme des clusters** : contrairement
+  au k-means, elle ne suppose pas de clusters sphériques
+
+### 5.2 PAM - Partitioning Around Medoids (exploratoire)
+
+PAM a été testé comme alternative non-hiérarchique, plus robuste
+aux outliers que la CAH car il choisit des **patients réels**
+(médoïdes) comme centres de clusters. Il a été écarté car il
+nécessite de fixer k a priori et peut converger vers des optima
+locaux.
+
+### 5.3 K-means (écarté)
+
+Le k-means a été écarté car il nécessite de calculer des **centroïdes**
+(moyennes), ce qui n'est pas possible sur des séquences de symboles.
+Il suppose également un espace euclidien incompatible avec la distance OM.
+
+---
+
+## 6. Choix du nombre de clusters
+
+Le nombre de clusters optimal a été déterminé en combinant deux critères :
+
+- **Score de silhouette** : mesure la cohésion intra-cluster et la
+  séparation inter-clusters. Un score proche de 1 indique des clusters
+  bien séparés.
+- **Méthode du coude** : cherche le point d'inflexion de la courbe
+  d'inertie intra-cluster en fonction de k.
+
+La **stabilité des clusters** a également été évaluée par bootstrap
+(package `fpc`), en mesurant l'indice de Jaccard entre les clusters
+obtenus sur des sous-échantillons. Un score supérieur à 0.75 indique
+des clusters très stables.
+
+---
+
+## 7. Visualisation
+
+Les clusters ont été visualisés en **3 dimensions** via une projection
+UMAP (Uniform Manifold Approximation and Projection) appliquée sur la
+matrice de distances OM, avec les paramètres suivants :
+
+- `n_neighbors = 15` : taille du voisinage local
+- `min_dist = 0.1` : compacité de la projection
+- `n_epochs = 500` : nombre d'itérations
+- `random_state = 42` : reproductibilité
+
+Les graphiques interactifs ont été produits avec **Plotly**, permettant
+d'explorer les clusters en faisant tourner la projection 3D.
+
+Les séquences les plus fréquentes par cluster ont été visualisées
+avec la fonction `seqfplot` du package **TraMineR**.
