@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Méthodologie – Parcours de soins IC</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-e31584831b205ffbb2d98406f31c2a5b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Parcours de soins IC</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Accueil</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./methode.html" aria-current="page"> 
+<span class="menu-text">Méthodes</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./resultat.html"> 
+<span class="menu-text">Analyse &amp; Résultats</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#méthodologie" id="toc-méthodologie" class="nav-link active" data-scroll-target="#méthodologie">Méthodologie</a>
+  <ul class="collapse">
+  <li><a href="#données-et-population" id="toc-données-et-population" class="nav-link" data-scroll-target="#données-et-population">1. Données et population</a></li>
+  <li><a href="#construction-des-séquences-de-soins" id="toc-construction-des-séquences-de-soins" class="nav-link" data-scroll-target="#construction-des-séquences-de-soins">2. Construction des séquences de soins</a>
+  <ul class="collapse">
+  <li><a href="#codage-des-états" id="toc-codage-des-états" class="nav-link" data-scroll-target="#codage-des-états">2.1 Codage des états</a></li>
+  <li><a href="#agrégation-hebdomadaire" id="toc-agrégation-hebdomadaire" class="nav-link" data-scroll-target="#agrégation-hebdomadaire">2.2 Agrégation hebdomadaire</a></li>
+  <li><a href="#ancrage-temporel" id="toc-ancrage-temporel" class="nav-link" data-scroll-target="#ancrage-temporel">2.3 Ancrage temporel</a></li>
+  <li><a href="#gestion-de-la-fin-de-suivi" id="toc-gestion-de-la-fin-de-suivi" class="nav-link" data-scroll-target="#gestion-de-la-fin-de-suivi">2.4 Gestion de la fin de suivi</a></li>
+  </ul></li>
+  <li><a href="#représentation-des-données" id="toc-représentation-des-données" class="nav-link" data-scroll-target="#représentation-des-données">3. Représentation des données</a>
+  <ul class="collapse">
+  <li><a href="#séquences-brutes-retenue" id="toc-séquences-brutes-retenue" class="nav-link" data-scroll-target="#séquences-brutes-retenue">3.1 Séquences brutes (retenue)</a></li>
+  <li><a href="#one-hot-encoding-écarté" id="toc-one-hot-encoding-écarté" class="nav-link" data-scroll-target="#one-hot-encoding-écarté">3.2 One-Hot Encoding (écarté)</a></li>
+  <li><a href="#analyse-des-correspondances-multiples---acm-exploratoire" id="toc-analyse-des-correspondances-multiples---acm-exploratoire" class="nav-link" data-scroll-target="#analyse-des-correspondances-multiples---acm-exploratoire">3.3 Analyse des Correspondances Multiples - ACM (exploratoire)</a></li>
+  </ul></li>
+  <li><a href="#mesure-de-distance-entre-séquences" id="toc-mesure-de-distance-entre-séquences" class="nav-link" data-scroll-target="#mesure-de-distance-entre-séquences">4. Mesure de distance entre séquences</a>
+  <ul class="collapse">
+  <li><a href="#distance-de-hamming-exploratoire" id="toc-distance-de-hamming-exploratoire" class="nav-link" data-scroll-target="#distance-de-hamming-exploratoire">4.1 Distance de Hamming (exploratoire)</a></li>
+  <li><a href="#optimal-matching-retenu" id="toc-optimal-matching-retenu" class="nav-link" data-scroll-target="#optimal-matching-retenu">4.2 Optimal Matching (retenu)</a></li>
+  </ul></li>
+  <li><a href="#algorithmes-de-clustering" id="toc-algorithmes-de-clustering" class="nav-link" data-scroll-target="#algorithmes-de-clustering">5. Algorithmes de clustering</a>
+  <ul class="collapse">
+  <li><a href="#cah-ward-d2-retenu" id="toc-cah-ward-d2-retenu" class="nav-link" data-scroll-target="#cah-ward-d2-retenu">5.1 CAH Ward D2 (retenu)</a></li>
+  <li><a href="#pam---partitioning-around-medoids-exploratoire" id="toc-pam---partitioning-around-medoids-exploratoire" class="nav-link" data-scroll-target="#pam---partitioning-around-medoids-exploratoire">5.2 PAM - Partitioning Around Medoids (exploratoire)</a></li>
+  <li><a href="#k-means-écarté" id="toc-k-means-écarté" class="nav-link" data-scroll-target="#k-means-écarté">5.3 K-means (écarté)</a></li>
+  </ul></li>
+  <li><a href="#choix-du-nombre-de-clusters" id="toc-choix-du-nombre-de-clusters" class="nav-link" data-scroll-target="#choix-du-nombre-de-clusters">6. Choix du nombre de clusters</a></li>
+  <li><a href="#visualisation" id="toc-visualisation" class="nav-link" data-scroll-target="#visualisation">7. Visualisation</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">Méthodologie</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="méthodologie" class="level1">
+<h1>Méthodologie</h1>
+<section id="données-et-population" class="level2">
+<h2 class="anchored" data-anchor-id="données-et-population">1. Données et population</h2>
+<p>Les données utilisées sont issues du <strong>Système National des Données de Santé (SNDS)</strong>, qui retrace l’ensemble des remboursements de soins de la population française.</p>
+<p>La population étudiée est constituée de patients ayant eu au moins une <strong>hospitalisation cardiaque</strong> (GHM commençant par 05), considérée comme l’événement index. Le suivi couvre <strong>52 semaines</strong> (1 an) à partir de cette première hospitalisation.</p>
+<hr>
+</section>
+<section id="construction-des-séquences-de-soins" class="level2">
+<h2 class="anchored" data-anchor-id="construction-des-séquences-de-soins">2. Construction des séquences de soins</h2>
+<section id="codage-des-états" class="level3">
+<h3 class="anchored" data-anchor-id="codage-des-états">2.1 Codage des états</h3>
+<p>Chaque acte de soin est recodé en un état selon la priorité suivante :</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 48%">
+<col style="width: 31%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>État</th>
+<th>Signification</th>
+<th>Critère</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>H1</td>
+<td>Hospitalisation cardiaque</td>
+<td>GHM 05xxx</td>
+</tr>
+<tr class="even">
+<td>H2</td>
+<td>Hospitalisation non cardiaque</td>
+<td>Autre GHM</td>
+</tr>
+<tr class="odd">
+<td>T</td>
+<td>Téléconsultation</td>
+<td>PRS_NAT_REF ∈ {1191, 1192, 1086}</td>
+</tr>
+<tr class="even">
+<td>M</td>
+<td>Médecin généraliste</td>
+<td>PRS_NAT_REF = 1110</td>
+</tr>
+<tr class="odd">
+<td>I</td>
+<td>Infirmier</td>
+<td>PSE_ACT_NAT = 24</td>
+</tr>
+<tr class="even">
+<td>P</td>
+<td>Paramédical (kiné, sage-femme)</td>
+<td>PSE_ACT_NAT ∈ {26, 21}</td>
+</tr>
+<tr class="odd">
+<td>PH</td>
+<td>Pharmacie</td>
+<td>PSE_ACT_NAT = 50</td>
+</tr>
+<tr class="even">
+<td>L</td>
+<td>Laboratoire</td>
+<td>PSE_ACT_NAT = 30</td>
+</tr>
+<tr class="odd">
+<td>S</td>
+<td>Spécialiste</td>
+<td>PSE_SPE_COD ∈ {22, 23, 12, 15, 33}</td>
+</tr>
+<tr class="even">
+<td>R</td>
+<td>Aucun soin (repos)</td>
+<td>Semaine sans acte</td>
+</tr>
+<tr class="odd">
+<td>F</td>
+<td>Fin de suivi (décès ou sortie)</td>
+<td>Après dernier acte ou date de décès</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="agrégation-hebdomadaire" class="level3">
+<h3 class="anchored" data-anchor-id="agrégation-hebdomadaire">2.2 Agrégation hebdomadaire</h3>
+<p>Les soins sont agrégés à la <strong>semaine</strong>. Lorsque plusieurs types de soins ont lieu la même semaine, les états sont combinés (ex. <code>H1+PH</code> si une hospitalisation cardiaque et une pharmacie ont lieu la même semaine). La priorité est donnée à H1, puis H2, puis les autres états triés alphabétiquement.</p>
+</section>
+<section id="ancrage-temporel" class="level3">
+<h3 class="anchored" data-anchor-id="ancrage-temporel">2.3 Ancrage temporel</h3>
+<p>Chaque séquence est <strong>ancrée sur la première hospitalisation cardiaque</strong> (S0 = H1 pour tous les patients). Les semaines suivantes (S1 à S51) décrivent l’évolution du parcours sur 1 an.</p>
+</section>
+<section id="gestion-de-la-fin-de-suivi" class="level3">
+<h3 class="anchored" data-anchor-id="gestion-de-la-fin-de-suivi">2.4 Gestion de la fin de suivi</h3>
+<p>L’état <strong>F</strong> (fin de suivi) est ajouté à partir de la semaine suivant le dernier acte enregistré, ou à partir de la date de décès si disponible, jusqu’à S51. Les patients dont le suivi couvre toute la période (jusqu’au 1er janvier 2025) ne reçoivent pas d’état F.</p>
+<hr>
+</section>
+</section>
+<section id="représentation-des-données" class="level2">
+<h2 class="anchored" data-anchor-id="représentation-des-données">3. Représentation des données</h2>
+<p>Trois représentations ont été comparées :</p>
+<section id="séquences-brutes-retenue" class="level3">
+<h3 class="anchored" data-anchor-id="séquences-brutes-retenue">3.1 Séquences brutes (retenue)</h3>
+<p>Chaque patient est représenté par une <strong>séquence de 52 symboles</strong> (S0 à S51), traitée directement par le package TraMineR. Cette représentation préserve l’ordre temporel des événements, ce qui est essentiel pour capturer la dynamique du parcours de soins.</p>
+</section>
+<section id="one-hot-encoding-écarté" class="level3">
+<h3 class="anchored" data-anchor-id="one-hot-encoding-écarté">3.2 One-Hot Encoding (écarté)</h3>
+<p>Les séquences ont également été transformées en une <strong>matrice binaire</strong> de 52 × 10 = 520 colonnes. Cette approche a été écartée car elle ignore la temporalité des événements : deux patients avec les mêmes soins dans un ordre différent auraient la même représentation, ce qui n’a pas de sens clinique.</p>
+</section>
+<section id="analyse-des-correspondances-multiples---acm-exploratoire" class="level3">
+<h3 class="anchored" data-anchor-id="analyse-des-correspondances-multiples---acm-exploratoire">3.3 Analyse des Correspondances Multiples - ACM (exploratoire)</h3>
+<p>L’ACM a été testée sur le One-Hot Encoding converti en variables catégorielles, puis suivie d’une HCPC. Bien qu’intéressante pour la réduction de dimensionnalité, cette approche souffre des mêmes limitations que le OHE concernant la perte d’information temporelle.</p>
+<hr>
+</section>
+</section>
+<section id="mesure-de-distance-entre-séquences" class="level2">
+<h2 class="anchored" data-anchor-id="mesure-de-distance-entre-séquences">4. Mesure de distance entre séquences</h2>
+<section id="distance-de-hamming-exploratoire" class="level3">
+<h3 class="anchored" data-anchor-id="distance-de-hamming-exploratoire">4.1 Distance de Hamming (exploratoire)</h3>
+<p>La distance de Hamming compte le <strong>nombre de positions différentes</strong> entre deux séquences. Simple et rapide, elle a été testée en première approche mais présente une limite importante : elle ne tient pas compte de l’ordre des événements et traite toutes les substitutions de manière identique.</p>
+</section>
+<section id="optimal-matching-retenu" class="level3">
+<h3 class="anchored" data-anchor-id="optimal-matching-retenu">4.2 Optimal Matching (retenu)</h3>
+<p>La distance <strong>Optimal Matching (OM)</strong> calcule le coût minimal pour transformer une séquence en une autre via des opérations d’insertion, suppression (indel) et substitution. C’est la méthode de référence en analyse de séquences biomédicales car elle respecte la structure temporelle des parcours.</p>
+<p>La matrice de substitution a été calculée par la méthode <strong>TRATE</strong> (basée sur les taux de transition observés dans les données) : plus deux états se succèdent souvent, plus leur substitution est peu coûteuse.</p>
+<p>Une personnalisation supplémentaire a été appliquée : les états <strong>R et F</strong>, considérés comme des états “passifs” sans signification clinique active, se voient attribuer un coût de substitution réduit (0.1 au lieu de 2), afin que leur présence n’écrase pas les différences cliniquement pertinentes entre parcours.</p>
+<hr>
+</section>
+</section>
+<section id="algorithmes-de-clustering" class="level2">
+<h2 class="anchored" data-anchor-id="algorithmes-de-clustering">5. Algorithmes de clustering</h2>
+<section id="cah-ward-d2-retenu" class="level3">
+<h3 class="anchored" data-anchor-id="cah-ward-d2-retenu">5.1 CAH Ward D2 (retenu)</h3>
+<p>La <strong>Classification Ascendante Hiérarchique</strong> avec critère de Ward D2 a été appliquée directement sur la matrice de distances OM. Elle présente plusieurs avantages dans ce contexte :</p>
+<ul>
+<li><strong>Déterministe</strong> : elle produit toujours le même résultat</li>
+<li><strong>Hiérarchique</strong> : le dendrogramme permet de visualiser toutes les découpages possibles et de choisir k de manière éclairée</li>
+<li><strong>Pas de contrainte sur la forme des clusters</strong> : contrairement au k-means, elle ne suppose pas de clusters sphériques</li>
+</ul>
+</section>
+<section id="pam---partitioning-around-medoids-exploratoire" class="level3">
+<h3 class="anchored" data-anchor-id="pam---partitioning-around-medoids-exploratoire">5.2 PAM - Partitioning Around Medoids (exploratoire)</h3>
+<p>PAM a été testé comme alternative non-hiérarchique, plus robuste aux outliers que la CAH car il choisit des <strong>patients réels</strong> (médoïdes) comme centres de clusters. Il a été écarté car il nécessite de fixer k a priori et peut converger vers des optima locaux.</p>
+</section>
+<section id="k-means-écarté" class="level3">
+<h3 class="anchored" data-anchor-id="k-means-écarté">5.3 K-means (écarté)</h3>
+<p>Le k-means a été écarté car il nécessite de calculer des <strong>centroïdes</strong> (moyennes), ce qui n’est pas possible sur des séquences de symboles. Il suppose également un espace euclidien incompatible avec la distance OM.</p>
+<hr>
+</section>
+</section>
+<section id="choix-du-nombre-de-clusters" class="level2">
+<h2 class="anchored" data-anchor-id="choix-du-nombre-de-clusters">6. Choix du nombre de clusters</h2>
+<p>Le nombre de clusters optimal a été déterminé en combinant deux critères :</p>
+<ul>
+<li><strong>Score de silhouette</strong> : mesure la cohésion intra-cluster et la séparation inter-clusters. Un score proche de 1 indique des clusters bien séparés.</li>
+<li><strong>Méthode du coude</strong> : cherche le point d’inflexion de la courbe d’inertie intra-cluster en fonction de k.</li>
+</ul>
+<p>La <strong>stabilité des clusters</strong> a également été évaluée par bootstrap (package <code>fpc</code>), en mesurant l’indice de Jaccard entre les clusters obtenus sur des sous-échantillons. Un score supérieur à 0.75 indique des clusters très stables.</p>
+<hr>
+</section>
+<section id="visualisation" class="level2">
+<h2 class="anchored" data-anchor-id="visualisation">7. Visualisation</h2>
+<p>Les clusters ont été visualisés en <strong>3 dimensions</strong> via une projection UMAP (Uniform Manifold Approximation and Projection) appliquée sur la matrice de distances OM, avec les paramètres suivants :</p>
+<ul>
+<li><code>n_neighbors = 15</code> : taille du voisinage local</li>
+<li><code>min_dist = 0.1</code> : compacité de la projection</li>
+<li><code>n_epochs = 500</code> : nombre d’itérations</li>
+<li><code>random_state = 42</code> : reproductibilité</li>
+</ul>
+<p>Les graphiques interactifs ont été produits avec <strong>Plotly</strong>, permettant d’explorer les clusters en faisant tourner la projection 3D.</p>
+<p>Les séquences les plus fréquentes par cluster ont été visualisées avec la fonction <code>seqfplot</code> du package <strong>TraMineR</strong>.</p>
+
+
+<!-- -->
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/pol646\.github\.io\/Analyse-de-parcours-de-soins\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Méthodologie"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">toc:</span><span class="co"> true</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu"># Méthodologie</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. Données et population</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>Les données utilisées sont issues du **Système National des Données de Santé (SNDS)**,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>qui retrace l'ensemble des remboursements de soins de la population française.</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>La population étudiée est constituée de patients ayant eu au moins une</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>**hospitalisation cardiaque** (GHM commençant par 05), considérée comme</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>l'événement index. Le suivi couvre **52 semaines** (1 an) à partir de cette</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>première hospitalisation.</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. Construction des séquences de soins</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2.1 Codage des états</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>Chaque acte de soin est recodé en un état selon la priorité suivante :</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> État <span class="pp">|</span> Signification <span class="pp">|</span> Critère <span class="pp">|</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="pp">|------|--------------|---------|</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> H1 <span class="pp">|</span> Hospitalisation cardiaque <span class="pp">|</span> GHM 05xxx <span class="pp">|</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> H2 <span class="pp">|</span> Hospitalisation non cardiaque <span class="pp">|</span> Autre GHM <span class="pp">|</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> T <span class="pp">|</span> Téléconsultation <span class="pp">|</span> PRS_NAT_REF ∈ {1191, 1192, 1086} <span class="pp">|</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> M <span class="pp">|</span> Médecin généraliste <span class="pp">|</span> PRS_NAT_REF = 1110 <span class="pp">|</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> I <span class="pp">|</span> Infirmier <span class="pp">|</span> PSE_ACT_NAT = 24 <span class="pp">|</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> P <span class="pp">|</span> Paramédical (kiné, sage-femme) <span class="pp">|</span> PSE_ACT_NAT ∈ {26, 21} <span class="pp">|</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> PH <span class="pp">|</span> Pharmacie <span class="pp">|</span> PSE_ACT_NAT = 50 <span class="pp">|</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> L <span class="pp">|</span> Laboratoire <span class="pp">|</span> PSE_ACT_NAT = 30 <span class="pp">|</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> S <span class="pp">|</span> Spécialiste <span class="pp">|</span> PSE_SPE_COD ∈ {22, 23, 12, 15, 33} <span class="pp">|</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> R <span class="pp">|</span> Aucun soin (repos) <span class="pp">|</span> Semaine sans acte <span class="pp">|</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> F <span class="pp">|</span> Fin de suivi (décès ou sortie) <span class="pp">|</span> Après dernier acte ou date de décès <span class="pp">|</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2.2 Agrégation hebdomadaire</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>Les soins sont agrégés à la **semaine**. Lorsque plusieurs types de soins</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>ont lieu la même semaine, les états sont combinés (ex. <span class="in">`H1+PH`</span> si une</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>hospitalisation cardiaque et une pharmacie ont lieu la même semaine).</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>La priorité est donnée à H1, puis H2, puis les autres états triés</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>alphabétiquement.</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2.3 Ancrage temporel</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>Chaque séquence est **ancrée sur la première hospitalisation cardiaque**</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>(S0 = H1 pour tous les patients). Les semaines suivantes (S1 à S51)</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>décrivent l'évolution du parcours sur 1 an.</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2.4 Gestion de la fin de suivi</span></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>L'état **F** (fin de suivi) est ajouté à partir de la semaine suivant</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>le dernier acte enregistré, ou à partir de la date de décès si disponible,</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>jusqu'à S51. Les patients dont le suivi couvre toute la période</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>(jusqu'au 1er janvier 2025) ne reçoivent pas d'état F.</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a><span class="fu">## 3. Représentation des données</span></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>Trois représentations ont été comparées :</span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3.1 Séquences brutes (retenue)</span></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>Chaque patient est représenté par une **séquence de 52 symboles**</span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>(S0 à S51), traitée directement par le package TraMineR. Cette</span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>représentation préserve l'ordre temporel des événements, ce qui est</span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>essentiel pour capturer la dynamique du parcours de soins.</span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3.2 One-Hot Encoding (écarté)</span></span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a>Les séquences ont également été transformées en une **matrice binaire**</span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>de 52 × 10 = 520 colonnes. Cette approche a été écartée car elle ignore</span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a>la temporalité des événements : deux patients avec les mêmes soins dans</span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a>un ordre différent auraient la même représentation, ce qui n'a pas de</span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a>sens clinique.</span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3.3 Analyse des Correspondances Multiples - ACM (exploratoire)</span></span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a>L'ACM a été testée sur le One-Hot Encoding converti en variables</span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a>catégorielles, puis suivie d'une HCPC. Bien qu'intéressante pour la</span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a>réduction de dimensionnalité, cette approche souffre des mêmes</span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a>limitations que le OHE concernant la perte d'information temporelle.</span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a><span class="fu">## 4. Mesure de distance entre séquences</span></span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a><span class="fu">### 4.1 Distance de Hamming (exploratoire)</span></span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a>La distance de Hamming compte le **nombre de positions différentes**</span>
+<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a>entre deux séquences. Simple et rapide, elle a été testée en première</span>
+<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a>approche mais présente une limite importante : elle ne tient pas compte</span>
+<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a>de l'ordre des événements et traite toutes les substitutions de manière</span>
+<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a>identique.</span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a><span class="fu">### 4.2 Optimal Matching (retenu)</span></span>
+<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a>La distance **Optimal Matching (OM)** calcule le coût minimal pour</span>
+<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a>transformer une séquence en une autre via des opérations d'insertion,</span>
+<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a>suppression (indel) et substitution. C'est la méthode de référence en</span>
+<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a>analyse de séquences biomédicales car elle respecte la structure</span>
+<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a>temporelle des parcours.</span>
+<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a>La matrice de substitution a été calculée par la méthode **TRATE**</span>
+<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a>(basée sur les taux de transition observés dans les données) :</span>
+<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a>plus deux états se succèdent souvent, plus leur substitution est</span>
+<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a>peu coûteuse.</span>
+<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a>Une personnalisation supplémentaire a été appliquée : les états</span>
+<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a>**R et F**, considérés comme des états "passifs" sans signification</span>
+<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a>clinique active, se voient attribuer un coût de substitution réduit</span>
+<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a>(0.1 au lieu de 2), afin que leur présence n'écrase pas les</span>
+<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a>différences cliniquement pertinentes entre parcours.</span>
+<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a><span class="fu">## 5. Algorithmes de clustering</span></span>
+<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a><span class="fu">### 5.1 CAH Ward D2 (retenu)</span></span>
+<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a>La **Classification Ascendante Hiérarchique** avec critère de Ward D2</span>
+<span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a>a été appliquée directement sur la matrice de distances OM. Elle</span>
+<span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a>présente plusieurs avantages dans ce contexte :</span>
+<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Déterministe** : elle produit toujours le même résultat</span>
+<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Hiérarchique** : le dendrogramme permet de visualiser toutes</span>
+<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a>  les découpages possibles et de choisir k de manière éclairée</span>
+<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Pas de contrainte sur la forme des clusters** : contrairement</span>
+<span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a>  au k-means, elle ne suppose pas de clusters sphériques</span>
+<span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a><span class="fu">### 5.2 PAM - Partitioning Around Medoids (exploratoire)</span></span>
+<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a>PAM a été testé comme alternative non-hiérarchique, plus robuste</span>
+<span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a>aux outliers que la CAH car il choisit des **patients réels**</span>
+<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a>(médoïdes) comme centres de clusters. Il a été écarté car il</span>
+<span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a>nécessite de fixer k a priori et peut converger vers des optima</span>
+<span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a>locaux.</span>
+<span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a><span class="fu">### 5.3 K-means (écarté)</span></span>
+<span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a>Le k-means a été écarté car il nécessite de calculer des **centroïdes**</span>
+<span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a>(moyennes), ce qui n'est pas possible sur des séquences de symboles.</span>
+<span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a>Il suppose également un espace euclidien incompatible avec la distance OM.</span>
+<span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a><span class="fu">## 6. Choix du nombre de clusters</span></span>
+<span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a>Le nombre de clusters optimal a été déterminé en combinant deux critères :</span>
+<span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-157"><a href="#cb1-157" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Score de silhouette** : mesure la cohésion intra-cluster et la</span>
+<span id="cb1-158"><a href="#cb1-158" aria-hidden="true" tabindex="-1"></a>  séparation inter-clusters. Un score proche de 1 indique des clusters</span>
+<span id="cb1-159"><a href="#cb1-159" aria-hidden="true" tabindex="-1"></a>  bien séparés.</span>
+<span id="cb1-160"><a href="#cb1-160" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Méthode du coude** : cherche le point d'inflexion de la courbe</span>
+<span id="cb1-161"><a href="#cb1-161" aria-hidden="true" tabindex="-1"></a>  d'inertie intra-cluster en fonction de k.</span>
+<span id="cb1-162"><a href="#cb1-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-163"><a href="#cb1-163" aria-hidden="true" tabindex="-1"></a>La **stabilité des clusters** a également été évaluée par bootstrap</span>
+<span id="cb1-164"><a href="#cb1-164" aria-hidden="true" tabindex="-1"></a>(package <span class="in">`fpc`</span>), en mesurant l'indice de Jaccard entre les clusters</span>
+<span id="cb1-165"><a href="#cb1-165" aria-hidden="true" tabindex="-1"></a>obtenus sur des sous-échantillons. Un score supérieur à 0.75 indique</span>
+<span id="cb1-166"><a href="#cb1-166" aria-hidden="true" tabindex="-1"></a>des clusters très stables.</span>
+<span id="cb1-167"><a href="#cb1-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-168"><a href="#cb1-168" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-169"><a href="#cb1-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-170"><a href="#cb1-170" aria-hidden="true" tabindex="-1"></a><span class="fu">## 7. Visualisation</span></span>
+<span id="cb1-171"><a href="#cb1-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a>Les clusters ont été visualisés en **3 dimensions** via une projection</span>
+<span id="cb1-173"><a href="#cb1-173" aria-hidden="true" tabindex="-1"></a>UMAP (Uniform Manifold Approximation and Projection) appliquée sur la</span>
+<span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a>matrice de distances OM, avec les paramètres suivants :</span>
+<span id="cb1-175"><a href="#cb1-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`n_neighbors = 15`</span> : taille du voisinage local</span>
+<span id="cb1-177"><a href="#cb1-177" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`min_dist = 0.1`</span> : compacité de la projection</span>
+<span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`n_epochs = 500`</span> : nombre d'itérations</span>
+<span id="cb1-179"><a href="#cb1-179" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`random_state = 42`</span> : reproductibilité</span>
+<span id="cb1-180"><a href="#cb1-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-181"><a href="#cb1-181" aria-hidden="true" tabindex="-1"></a>Les graphiques interactifs ont été produits avec **Plotly**, permettant</span>
+<span id="cb1-182"><a href="#cb1-182" aria-hidden="true" tabindex="-1"></a>d'explorer les clusters en faisant tourner la projection 3D.</span>
+<span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a>Les séquences les plus fréquentes par cluster ont été visualisées</span>
+<span id="cb1-185"><a href="#cb1-185" aria-hidden="true" tabindex="-1"></a>avec la fonction <span class="in">`seqfplot`</span> du package **TraMineR**.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
