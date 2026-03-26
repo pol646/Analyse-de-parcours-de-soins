@@ -1,0 +1,277 @@
+---
+title: "mini_proj_6"
+format: html
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+library(lubridate)
+library(readxl)
+library(TraMineR)
+
+# ── 1. Chargement ────────────────────────────────────────────
+df <- suppressWarnings(read_excel("tous_les_parcours_patients.xlsx")) %>%
+  mutate(
+    date_debut = as.Date(if_else(TYPE == "Hospitalisation", HOS_EXE_SOI_DTD, EXE_SOI_DTD)),
+    date_fin   = as.Date(if_else(TYPE == "Hospitalisation", HOS_EXE_SOI_DTF, EXE_SOI_DTF))
+  )
+
+# ── 2. Codage de l'état de chaque acte ───────────────────────
+# Priorité : H1 > H2 > T > M > I > P > PH > L > S
+df <- df %>%
+  mutate(etat = case_when(
+    TYPE == "Hospitalisation" & str_starts(as.character(GRG_GHM), "05") ~ "H1",  # hospit. cardiaque
+    TYPE == "Hospitalisation"                                            ~ "H2",  # hospit. autre
+    PRS_NAT_REF %in% c(1192, 1191, 1086)                                ~ "T",   # téléconsultation
+    PRS_NAT_REF == 1110                                                  ~ "M",   # médecin généraliste
+    PSE_ACT_NAT == 24                                                    ~ "I",   # infirmier
+    PSE_ACT_NAT %in% c(26, 21)                                          ~ "P",   # paramédical
+    PSE_ACT_NAT == 50                                                    ~ "PH",  # pharmacie
+    PSE_ACT_NAT == 30                                                    ~ "L",   # laboratoire
+    PSE_SPE_COD %in% c(22, 23, 12, 15, 33)                             ~ "S",   # spécialiste
+    TRUE                                                                 ~ NA_character_
+  )) %>%
+  filter(!is.na(etat))
+
+# ── 3. Origine = 1ère hospitalisation cardiaque (H1) ─────────
+df <- df %>%
+  group_by(NUM_ENQ) %>%
+  filter(any(etat == "H1")) %>%          # garder seulement les patients H1
+  mutate(date_origine = min(date_debut[etat == "H1"], na.rm = TRUE)) %>%
+  ungroup() %>%
+  mutate(semaine = as.integer(floor(as.numeric(date_debut - date_origine) / 7))) %>%
+  filter(between(semaine, 0, 51))        # 1 an de suivi (S0–S51)
+
+# ── 4. État par semaine (combinaisons possibles) ─────────────
+# Ex. : si H1 et PH la même semaine → "H1+PH"
+combiner_etats <- function(etats) {
+  etats <- sort(unique(etats))
+  if ("H1" %in% etats) return(paste(c("H1", setdiff(etats, "H1")), collapse = "+"))
+  if ("H2" %in% etats) return(paste(c("H2", setdiff(etats, "H2")), collapse = "+"))
+  paste(etats, collapse = "+")
+}
+
+df_semaine <- df %>%
+  group_by(NUM_ENQ, semaine) %>%
+  summarise(etat_semaine = combiner_etats(etat), .groups = "drop")
+
+# ── 5. Ajout de l'état F (fin de suivi : décès ou sortie) ────
+DATE_FIN_SUIVI <- as.Date("2025-01-01")
+
+fin_suivi <- df %>%
+  select(NUM_ENQ, date_origine, date_debut, BEN_DCD_DTE) %>%
+  group_by(NUM_ENQ) %>%
+  summarise(
+    date_origine   = first(date_origine),
+    derniere_date  = max(date_debut, na.rm = TRUE),
+    date_dcd       = {
+      d <- as.Date(first(na.omit(BEN_DCD_DTE)))
+      if_else(!is.na(d) & d != as.Date("1599-12-31"), d, NA_Date_)
+    },
+    .groups = "drop"
+  ) %>%
+  mutate(
+    date_fin_patient = if_else(!is.na(date_dcd), date_dcd, derniere_date),
+    sem_fin = as.integer(floor(as.numeric(date_fin_patient - date_origine) / 7)) + 1L
+  ) %>%
+  filter(between(sem_fin, 0, 51), date_fin_patient < DATE_FIN_SUIVI)
+
+# Générer les lignes "F" de sem_fin à S51 pour chaque patient sorti
+rows_F <- fin_suivi %>%
+  rowwise() %>%
+  reframe(NUM_ENQ = NUM_ENQ, semaine = seq(sem_fin, 51L), etat_semaine = "F")
+
+# Fusionner : les actes réels ont la priorité sur F
+df_semaine <- df_semaine %>%
+  anti_join(rows_F, by = c("NUM_ENQ", "semaine")) %>%
+  bind_rows(rows_F) %>%
+  arrange(NUM_ENQ, semaine)
+# ── 6. Format large : 1 ligne par patient, 1 colonne par semaine ─
+col_sem <- paste0("S", 0:51)
+
+df_wide <- df_semaine %>%
+  # On s'assure une dernière fois que S0 est H1 dans les données long
+  mutate(etat_semaine = if_else(semaine == 0, "H1", etat_semaine)) %>%
+  pivot_wider(
+    names_from = semaine, 
+    names_prefix = "S", 
+    values_from = etat_semaine, 
+    values_fn = first
+  ) %>%
+  # Gestion des colonnes manquantes
+  { for (col in col_sem) if (!col %in% names(.)) .[[col]] <- NA_character_; . } %>%
+  select(NUM_ENQ, all_of(col_sem)) %>%
+  # Remplissage des vides par "R"
+  mutate(across(all_of(col_sem), ~ replace_na(., "R"))) %>%
+  # SÉCURITÉ : On force la colonne S0 à "H1" pour tout le monde
+  mutate(S0 = "H1") 
+
+# On identifie les patients qui n'ont QUE "R" ou "F" de S1 à S51
+indices_suivi <- apply(df_wide[, paste0("S", 1:51)], 1, function(x) {
+  any(!(x %in% c("R", "F")))
+})
+
+# On filtre le tableau
+df_wide <- df_wide[indices_suivi, ]
+
+# ── Résumé ───────────────────────────────────────────────────
+alphabet <- sort(unique(unlist(df_wide[col_sem])))
+cat("Patients inclus :", nrow(df_wide), "\n")
+cat("États distincts :", length(alphabet), "(dont", sum(str_detect(alphabet, "\\+")), "combinaisons)\n")
+```
+
+```{r}
+
+col_sem <- paste0("S", 0:51)
+
+# ── 1. Construction de l'objet séquence TraMineR ─────────────
+
+seq.ic <- seqdef(
+  data     = df_wide,
+  var      = col_sem,
+)
+
+cost_trate <- seqsubm(seq.ic, method = "TRATE")
+distance.matrix = seqdist(seq.ic, method ="OM", sm = cost_trate)
+
+ward.hclust = hclust(as.dist(distance.matrix), method = "ward.D2")
+plot(ward.hclust)
+
+k_final = 3
+cluster.solution = cutree(ward.hclust, k = k_final)
+
+df_wide$cluster <- factor(
+  cutree(ward.hclust, k_final),
+  labels = paste("Cluster", 1:k_final)
+)
+```
+
+```{r}
+# Calcul de la qualité
+library(WeightedCluster)
+stats <- wcClusterQuality(as.dist(distance.matrix), df_wide$cluster)
+print(stats$stats)
+
+# Calcul de la distance moyenne au centre pour chaque cluster
+# (Indice de cohésion intra-cluster)
+diss_stats <- dissassoc(as.dist(distance.matrix), df_wide$cluster)
+print(diss_stats)
+
+library(fpc)
+# Stabilité via Bootstrap (mesure de Jaccard)
+# Un score > 0.75 indique un cluster très stable
+stability <- clusterboot(as.dist(distance.matrix), 
+                        B = 50, # nombre de répétitions
+                        bootmethod = "boot",
+                        clustermethod = hclustCBI, 
+                        method = "ward.D2", 
+                        k = k_final)
+print(stability$bootmean)
+```
+
+```{r}
+library(plotly)
+set.seed(42)
+umap_visu_3d <- umap(as.matrix(distance.matrix), config = modifyList(umap.defaults, list(
+  input        = "dist",
+  n_components = 3,    # Changement ici pour 3 dimensions
+  n_neighbors  = 15,
+  min_dist     = 0.1,
+  random_state = 42
+)))
+
+df_visu_3d <- data.frame(
+  UMAP1   = umap_visu_3d$layout[, 1],
+  UMAP2   = umap_visu_3d$layout[, 2],
+  UMAP3   = umap_visu_3d$layout[, 3],
+  Cluster = df_wide$cluster,
+  Patient = df_wide$NUM_ENQ
+)
+
+
+plot_ly(df_visu_3d, 
+        x = ~UMAP1, 
+        y = ~UMAP2, 
+        z = ~UMAP3, 
+        color = ~Cluster, 
+        colors = "Set1", # Ou votre palette préférée
+        type = "scatter3d", 
+        mode = "markers",
+        marker = list(size = 3, opacity = 0.7),
+        text = ~paste("Patient :", Patient)) %>%
+  layout(
+    title = paste0("UMAP 3D — distance OM (k = ", k_final, ")"),
+    scene = list(
+      xaxis = list(title = "UMAP 1"),
+      yaxis = list(title = "UMAP 2"),
+      zaxis = list(title = "UMAP 3")
+    )
+  )
+
+  # 1. On récupère l'alphabet actuel (ex: "F", "H", "R", "S")
+  mon_alphabet <- alphabet(seq.ic)
+  
+  # 2. On récupère la palette de couleurs actuelle
+  ma_palette <- cpal(seq.ic)
+  
+  # 3. On nomme le vecteur pour être sûr de modifier la bonne lettre
+  names(ma_palette) <- mon_alphabet
+  
+  # 4. On change les couleurs pour F et R (utilisez des noms ou des codes Hexa)
+  # Exemple : F en "firebrick" (rouge foncé) et R en "royalblue" (bleu)
+  ma_palette["F"] <- "firebrick"
+  ma_palette["R"] <- "royalblue"
+  
+  # 5. On réinjecte la palette modifiée dans l'objet de séquence
+  cpal(seq.ic) <- as.vector(ma_palette)
+
+  
+# ── 7. Visualisation des séquences par cluster ───────────────
+for (cl in levels(df_wide$cluster)) {
+  idx  <- which(df_wide$cluster == cl)
+  n_cl <- length(idx)
+
+  layout(matrix(1:2, 2), heights = c(0.7, 0.3))
+
+  par(mar = c(4, 4, 3, 1))
+  seqfplot(
+    seq.ic[idx, ],
+    title       = paste0(cl, " — OM (n = ", n_cl, ")"),
+    xlab        = "Semaines depuis 1ère hospit. IC",
+    idxs        = 1:30,
+    border      = NA,
+    with.legend = FALSE
+  )
+  par(mar = c(0, 0, 0, 0))
+  plot.new()
+  legend("center",
+         legend = attr(seq.ic, "labels"),
+         fill   = attr(seq.ic, "cpal"),
+         ncol   = 4, cex = 0.85, bty = "n", title = "États")
+}
+
+# ── 8. Description socio-démographique des clusters ──────────
+vars_patient <- df %>%
+  group_by(NUM_ENQ) %>%
+  summarise(
+    annee_naissance = first(na.omit(BEN_NAI_ANN)),
+    sexe            = first(na.omit(BEN_SEX_COD)),
+    cout_total      = sum(PRS_PAI_MNT, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+df_wide %>%
+  select(NUM_ENQ, cluster) %>%
+  inner_join(vars_patient, by = "NUM_ENQ") %>%
+  group_by(cluster) %>%
+  summarise(
+    n            = n(),
+    age_moyen    = mean(annee_naissance,    na.rm = TRUE),
+    age_sd       = sd(annee_naissance,      na.rm = TRUE),
+    pct_femmes   = mean(sexe == 2,          na.rm = TRUE) * 100,
+    cout_median  = median(cout_total,       na.rm = TRUE),
+    cout_q1      = quantile(cout_total, 0.25, na.rm = TRUE),
+    cout_q3      = quantile(cout_total, 0.75, na.rm = TRUE)
+  )
+```

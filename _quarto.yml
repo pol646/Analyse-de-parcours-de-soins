@@ -1,0 +1,21 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Parcours de soins IC"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Accueil
+      - href: methodes.qmd
+        text: Méthodes
+      - href: mini_proj_6.qmd
+        text: Analyse & Résultats
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    code-fold: true        
+    code-tools: true
