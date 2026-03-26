@@ -8,9 +8,9 @@ website:
     left:
       - href: index.qmd
         text: Accueil
-      - href: methodes.qmd
+      - href: methode.qmd
         text: Méthodes
-      - href: mini_proj_6.qmd
+      - href: resultat.qmd
         text: Analyse & Résultats
 
 format:

@@ -11,7 +11,7 @@ library(readxl)
 library(TraMineR)
 
 # ── 1. Chargement ────────────────────────────────────────────
-df <- suppressWarnings(read_excel("tous_les_parcours_patients.xlsx")) %>%
+df <- suppressWarnings(read_excel("data/tous_les_parcours_patients.xlsx")) %>%
   mutate(
     date_debut = as.Date(if_else(TYPE == "Hospitalisation", HOS_EXE_SOI_DTD, EXE_SOI_DTD)),
     date_fin   = as.Date(if_else(TYPE == "Hospitalisation", HOS_EXE_SOI_DTF, EXE_SOI_DTF))
