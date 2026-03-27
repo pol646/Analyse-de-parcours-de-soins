@@ -237,10 +237,14 @@ df_wide$cluster <- factor(
 ```{r}
 #| label: qualite-clustering
 
-stats    <- wcClusterQuality(as.dist(distance.matrix), df_wide$cluster)
-df_stats <- as.data.frame(t(stats$stats)) %>%
-  rownames_to_column("Indice") %>%
-  mutate(across(where(is.numeric), ~ round(.x, 4)))
+stats <- wcClusterQuality(as.dist(distance.matrix), df_wide$cluster)
+
+# Convert the named vector directly to a long-format data frame
+df_stats <- data.frame(
+  Indice = names(stats$stats),
+  Valeur = as.numeric(stats$stats)
+) %>%
+  mutate(Valeur = round(Valeur, 4))
 
 kable(df_stats,
       col.names = c("Indice", "Valeur"),
