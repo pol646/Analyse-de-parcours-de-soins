@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://pol646.github.io/Analyse-de-parcours-de-soins/resultat.html</loc>
-    <lastmod>2026-03-26T20:32:49.282Z</lastmod>
+    <loc>https://pol646.github.io/Analyse-de-parcours-de-soins/parcours-soins-IC/resultat.html</loc>
+    <lastmod>2026-03-27T08:05:06.766Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pol646.github.io/Analyse-de-parcours-de-soins/parcours-soins-IC/index.html</loc>
+    <lastmod>2026-03-27T08:02:58.484Z</lastmod>
   </url>
   <url>
     <loc>https://pol646.github.io/Analyse-de-parcours-de-soins/index.html</loc>
-    <lastmod>2026-03-26T20:26:13.438Z</lastmod>
+    <lastmod>2026-03-26T19:58:07.760Z</lastmod>
   </url>
   <url>
-    <loc>https://pol646.github.io/Analyse-de-parcours-de-soins/about.html</loc>
+    <loc>https://pol646.github.io/Analyse-de-parcours-de-soins/parcours-soins-IC/about.html</loc>
     <lastmod>2026-03-26T20:19:40.916Z</lastmod>
   </url>
   <url>
-    <loc>https://pol646.github.io/Analyse-de-parcours-de-soins/methode.html</loc>
+    <loc>https://pol646.github.io/Analyse-de-parcours-de-soins/parcours-soins-IC/methode.html</loc>
     <lastmod>2026-03-26T20:01:40.175Z</lastmod>
   </url>
 </urlset>
