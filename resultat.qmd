@@ -39,7 +39,6 @@ library(cluster)
 library(WeightedCluster)
 library(fpc)
 library(knitr)
-library(kableExtra)
 ```
 
 # Chargement et préparation des données
@@ -245,9 +244,8 @@ df_stats <- as.data.frame(t(stats$stats)) %>%
 
 kable(df_stats,
       col.names = c("Indice", "Valeur"),
-      caption   = "Indices de qualité du clustering") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
-                full_width = FALSE)
+      caption   = "Indices de qualité du clustering",
+      align     = c("l", "r"))
 ```
 
 ## Cohésion intra-cluster
@@ -262,9 +260,8 @@ df_diss <- as.data.frame(diss_stats$stats) %>%
   mutate(across(where(is.numeric), ~ round(.x, 3)))
 
 kable(df_diss,
-      caption = "Distance moyenne au centre par cluster") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
-                full_width = FALSE)
+      caption = "Distance moyenne au centre par cluster",
+      align   = c("l", rep("r", ncol(df_diss) - 1)))
 ```
 
 ## Stabilité par bootstrap
@@ -283,16 +280,15 @@ stability <- clusterboot(
   k             = k_final
 )
 
-data.frame(
-  Cluster      = paste("Cluster", 1:k_final),
-  Jaccard_moyen = round(stability$bootmean, 3),
-  Stabilite    = ifelse(stability$bootmean > 0.75, "✔ Stable", "⚠ Instable")
-) %>%
-  kable(caption = "Stabilité bootstrap (50 répétitions)") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
-                full_width = FALSE) %>%
-  column_spec(3, bold = TRUE,
-              color = ifelse(stability$bootmean > 0.75, "darkgreen", "firebrick"))
+kable(
+  data.frame(
+    Cluster       = paste("Cluster", 1:k_final),
+    Jaccard_moyen = round(stability$bootmean, 3),
+    Stabilite     = ifelse(stability$bootmean > 0.75, "Stable", "Instable")
+  ),
+  caption = "Stabilité bootstrap (50 répétitions)",
+  align   = c("l", "r", "l")
+)
 ```
 
 ---
@@ -417,10 +413,8 @@ df_desc <- df_wide %>%
   )
 
 kable(df_desc,
-      caption = "Description socio-démographique et économique par cluster") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
-                full_width = TRUE) %>%
-  column_spec(1, bold = TRUE)
+      caption = "Description socio-démographique et économique par cluster",
+      align   = c("l", rep("r", ncol(df_desc) - 1)))
 ```
 
 ---
