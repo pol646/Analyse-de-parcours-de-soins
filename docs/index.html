@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Parcours de soins IC</title>
+<title>Analyse des parcours de soins en Insuffisance Cardiaque – Parcours de soins IC</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -103,6 +103,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 </head>
@@ -144,7 +147,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
@@ -152,40 +155,109 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#analyse-des-parcours-de-soins-en-insuffisance-cardiaque" id="toc-analyse-des-parcours-de-soins-en-insuffisance-cardiaque" class="nav-link active" data-scroll-target="#analyse-des-parcours-de-soins-en-insuffisance-cardiaque">Analyse des parcours de soins en Insuffisance Cardiaque</a>
+  <li><a href="#parcours-de-soins-en-insuffisance-cardiaque" id="toc-parcours-de-soins-en-insuffisance-cardiaque" class="nav-link active" data-scroll-target="#parcours-de-soins-en-insuffisance-cardiaque">Parcours de soins en Insuffisance Cardiaque</a>
   <ul class="collapse">
-  <li><a href="#objectif" id="toc-objectif" class="nav-link" data-scroll-target="#objectif">Objectif</a></li>
-  <li><a href="#données" id="toc-données" class="nav-link" data-scroll-target="#données">Données</a></li>
+  <li><a href="#analyse-de-trajectoires-par-clustering-non-supervisé" id="toc-analyse-de-trajectoires-par-clustering-non-supervisé" class="nav-link" data-scroll-target="#analyse-de-trajectoires-par-clustering-non-supervisé">Analyse de trajectoires par clustering non supervisé</a></li>
   </ul></li>
+  <li><a href="#pipeline-danalyse" id="toc-pipeline-danalyse" class="nav-link" data-scroll-target="#pipeline-danalyse">Pipeline d’analyse</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><h1 class="title display-7"></h1></header><div class="quarto-title-block"><div class="quarto-title-tools-only"><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">Analyse des parcours de soins en Insuffisance Cardiaque</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
 
 
 
+<div class="quarto-title-meta column-page-left">
 
-<section id="analyse-des-parcours-de-soins-en-insuffisance-cardiaque" class="level1">
-<h1>Analyse des parcours de soins en Insuffisance Cardiaque</h1>
-<p>Ce projet analyse les trajectoires de soins de patients hospitalisés pour insuffisance cardiaque sur 52 semaines, à partir des données du SNDS.</p>
-<section id="objectif" class="level2">
-<h2 class="anchored" data-anchor-id="objectif">Objectif</h2>
-<p>Identifier des profils types de parcours de soins par méthodes de clustering non supervisé.</p>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="parcours-de-soins-en-insuffisance-cardiaque" class="level1 hero-banner" style="background: linear-gradient(135deg, #1a73e8, #0d47a1); color: white; padding: 60px 40px; border-radius: 12px; margin-bottom: 40px; text-align: center;">
+<h1>Parcours de soins en Insuffisance Cardiaque</h1>
+<section id="analyse-de-trajectoires-par-clustering-non-supervisé" class="level3">
+<h3 class="anchored" data-anchor-id="analyse-de-trajectoires-par-clustering-non-supervisé">Analyse de trajectoires par clustering non supervisé</h3>
+<p><em>52 semaines de suivi · Données simulées SNDS · R &amp; TraMineR</em></p>
 </section>
-<section id="données" class="level2">
-<h2 class="anchored" data-anchor-id="données">Données</h2>
+</section>
+<div class="grid">
+<div class="g-col-4">
+<section id="objectif" class="level3 card" style="border: 1px solid #e0e0e0; border-radius: 10px; padding: 25px; text-align: center; height: 100%;">
+<h3 class="anchored" data-anchor-id="objectif">Objectif</h3>
+<p>Identifier des <strong>profils types</strong> de parcours de soins post-hospitalisation cardiaque par méthodes de clustering non supervisé.</p>
+</section>
+</div>
+<div class="g-col-4">
+<section id="données" class="level3 card" style="border: 1px solid #e0e0e0; border-radius: 10px; padding: 25px; text-align: center; height: 100%;">
+<h3 class="anchored" data-anchor-id="données">Données</h3>
+<p>Source : <strong>SNDS</strong> (simulé)<br>
+Population : patients avec au moins une hospitalisation cardiaque<br>
+Suivi : <strong>52 semaines</strong></p>
+</section>
+</div>
+<div class="g-col-4">
+<section id="méthodes" class="level3 card" style="border: 1px solid #e0e0e0; border-radius: 10px; padding: 25px; text-align: center; height: 100%;">
+<h3 class="anchored" data-anchor-id="méthodes">Méthodes</h3>
+<p>Distance <strong>Optimal Matching</strong><br>
+Clustering <strong>CAH Ward D2</strong><br>
+Visualisation <strong>UMAP 3D</strong></p>
+</section>
+</div>
+</div>
+<hr>
+<section id="pipeline-danalyse" class="level2">
+<h2 class="anchored" data-anchor-id="pipeline-danalyse">Pipeline d’analyse</h2>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A[Données SNDS] --&gt; B[Codage des états]
+    B --&gt; C[Séquences hebdomadaires]
+    C --&gt; D[Distance Optimal Matching]
+    D --&gt; E[CAH Ward D2]
+    E --&gt; F[3 clusters]
+    F --&gt; G[Visualisation UMAP 3D]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<div class="grid">
+<section id="à-propos" class="level2 g-col-6">
+<h2 class="anchored" data-anchor-id="à-propos">À propos</h2>
+<p>Projet réalisé dans le cadre d’un cours de <strong>Data Science en Santé</strong> à l’IMT.<br>
+Outils utilisés : <code>R</code>, <code>TraMineR</code>, <code>UMAP</code>, <code>Plotly</code>, <code>Quarto</code>.</p>
+</section>
+<section id="liens" class="level2 g-col-6">
+<h2 class="anchored" data-anchor-id="liens">Liens</h2>
 <ul>
-<li>Source : SNDS (Système National des Données de Santé)</li>
-<li>Population : patients avec au moins une hospitalisation cardiaque (GHM 05xxx)</li>
-<li>Suivi : 52 semaines post-hospitalisation index</li>
+<li><a href="https://github.com/pol646/Analyse-de-parcours-de-soins">Code source sur GitHub</a></li>
+<li><a href="resultat.html">Analyse et Résultats</a></li>
+<li><a href="methode.html">Méthodologie</a></li>
 </ul>
+</section>
+</div>
 
 
 <!-- -->
 
-</section>
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -639,21 +711,81 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Analyse des parcours de soins en Insuffisance Cardiaque</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>Ce projet analyse les trajectoires de soins de patients </span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>hospitalisés pour insuffisance cardiaque sur 52 semaines, </span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>à partir des données du SNDS.</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">## Objectif</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>Identifier des profils types de parcours de soins </span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>par méthodes de clustering non supervisé.</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Analyse des parcours de soins en Insuffisance Cardiaque"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">    page-layout: full</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>::: {.hero-banner style="background: linear-gradient(135deg, #1a73e8, #0d47a1); color: white; padding: 60px 40px; border-radius: 12px; margin-bottom: 40px; text-align: center;"}</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu"># Parcours de soins en Insuffisance Cardiaque</span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">## Données</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Source : SNDS (Système National des Données de Santé)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Population : patients avec au moins une hospitalisation </span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  cardiaque (GHM 05xxx)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Suivi : 52 semaines post-hospitalisation index</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">### Analyse de trajectoires par clustering non supervisé</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>*52 semaines de suivi · Données simulées SNDS · R &amp; TraMineR*</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>::: {.grid}</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>::: {.g-col-4}</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>::: {.card style="border: 1px solid #e0e0e0; border-radius: 10px; padding: 25px; text-align: center; height: 100%;"}</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">### Objectif</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>Identifier des **profils types** de parcours de soins </span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>post-hospitalisation cardiaque par méthodes de clustering </span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>non supervisé.</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>::: {.g-col-4}</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>::: {.card style="border: 1px solid #e0e0e0; border-radius: 10px; padding: 25px; text-align: center; height: 100%;"}</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="fu">### Données</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>Source : **SNDS** (simulé)  </span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>Population : patients avec au moins une hospitalisation cardiaque  </span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>Suivi : **52 semaines**</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>::: {.g-col-4}</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>::: {.card style="border: 1px solid #e0e0e0; border-radius: 10px; padding: 25px; text-align: center; height: 100%;"}</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="fu">### Méthodes</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>Distance **Optimal Matching**  </span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>Clustering **CAH Ward D2**  </span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>Visualisation **UMAP 3D**</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="fu">## Pipeline d'analyse</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="in">```{mermaid}</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>flowchart LR</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>    A[Données SNDS] --&gt; B[Codage des états]</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>    B --&gt; C[Séquences hebdomadaires]</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>    C --&gt; D[Distance Optimal Matching]</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>    D --&gt; E[CAH Ward D2]</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>    E --&gt; F[<span class="dv">3</span> clusters]</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>    F --&gt; G[Visualisation UMAP <span class="dv">3</span>D]</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>::: {.grid}</span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>::: {.g-col-6}</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a><span class="fu">## À propos</span></span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>Projet réalisé dans le cadre d'un cours de **Data Science en Santé** à l'IMT.  </span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>Outils utilisés : <span class="in">`R`</span>, <span class="in">`TraMineR`</span>, <span class="in">`UMAP`</span>, <span class="in">`Plotly`</span>, <span class="in">`Quarto`</span>.</span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>::: {.g-col-6}</span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a><span class="fu">## Liens</span></span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Code source sur GitHub</span><span class="co">](https://github.com/pol646/Analyse-de-parcours-de-soins)</span></span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Analyse et Résultats</span><span class="co">](resultat.html)</span></span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Méthodologie</span><span class="co">](methode.html)</span></span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>:::</span>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

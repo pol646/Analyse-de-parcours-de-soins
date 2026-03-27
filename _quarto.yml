@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "Parcours de soins IC"
+  title: "Analyse de parcours de soins IC"
   navbar:
     left:
       - href: index.qmd
@@ -17,5 +17,5 @@ format:
   html:
     theme: cosmo
     toc: true
-    code-fold: true        
+    code-fold: true
     code-tools: true
