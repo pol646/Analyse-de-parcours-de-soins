@@ -1,7 +1,13 @@
 ---
-title: "mini_proj_6"
-format: html
-editor: visual
+title: "Analyse et Résultats"
+format: 
+  html:
+    code-fold: true
+    code-tools: true
+execute:
+  warning: false
+  message: false
+  echo: true
 ---
 
 ```{r}

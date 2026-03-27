@@ -1,15 +1,74 @@
-# Analyse des parcours de soins en Insuffisance Cardiaque
+---
+title: "Analyse des parcours de soins en Insuffisance Cardiaque"
+format:
+  html:
+    page-layout: full
+---
 
-Ce projet analyse les trajectoires de soins de patients 
-hospitalisés pour insuffisance cardiaque sur 52 semaines, 
-à partir des données du SNDS.
+::: {.hero-banner style="background: linear-gradient(135deg, #1a73e8, #0d47a1); color: white; padding: 60px 40px; border-radius: 12px; margin-bottom: 40px; text-align: center;"}
+# Parcours de soins en Insuffisance Cardiaque
 
-## Objectif
-Identifier des profils types de parcours de soins 
-par méthodes de clustering non supervisé.
+### Analyse de trajectoires par clustering non supervisé
 
-## Données
-- Source : SNDS (Système National des Données de Santé)
-- Population : patients avec au moins une hospitalisation 
-  cardiaque (GHM 05xxx)
-- Suivi : 52 semaines post-hospitalisation index
+*52 semaines de suivi · Données simulées SNDS · R & TraMineR*
+:::
+
+::: {.grid}
+
+::: {.g-col-4}
+::: {.card style="border: 1px solid #e0e0e0; border-radius: 10px; padding: 25px; text-align: center; height: 100%;"}
+### Objectif
+Identifier des **profils types** de parcours de soins 
+post-hospitalisation cardiaque par méthodes de clustering 
+non supervisé.
+:::
+:::
+
+::: {.g-col-4}
+::: {.card style="border: 1px solid #e0e0e0; border-radius: 10px; padding: 25px; text-align: center; height: 100%;"}
+### Données
+Source : **SNDS** (simulé)  
+Population : patients avec au moins une hospitalisation cardiaque  
+Suivi : **52 semaines**
+:::
+:::
+
+::: {.g-col-4}
+::: {.card style="border: 1px solid #e0e0e0; border-radius: 10px; padding: 25px; text-align: center; height: 100%;"}
+### Méthodes
+Distance **Optimal Matching**  
+Clustering **CAH Ward D2**  
+Visualisation **UMAP 3D**
+:::
+:::
+
+:::
+
+---
+
+## Pipeline d'analyse
+```{mermaid}
+flowchart LR
+    A[Données SNDS] --> B[Codage des états]
+    B --> C[Séquences hebdomadaires]
+    C --> D[Distance Optimal Matching]
+    D --> E[CAH Ward D2]
+    E --> F[3 clusters]
+    F --> G[Visualisation UMAP 3D]
+```
+
+---
+
+::: {.grid}
+::: {.g-col-6}
+## À propos
+Projet réalisé dans le cadre d'un cours de **Data Science en Santé** à l'IMT.  
+Outils utilisés : `R`, `TraMineR`, `UMAP`, `Plotly`, `Quarto`.
+:::
+::: {.g-col-6}
+## Liens
+- [Code source sur GitHub](https://github.com/pol646/Analyse-de-parcours-de-soins)
+- [Analyse et Résultats](resultat.html)
+- [Méthodologie](methode.html)
+:::
+:::
