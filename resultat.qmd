@@ -1,9 +1,24 @@
 ---
-title: "Analyse et Résultats"
-format: 
+title: "Analyse des Parcours Patients"
+subtitle: "Clustering des trajectoires de soins post-hospitalisation cardiaque"
+author: ""
+date: today
+format:
   html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    toc-title: "Sommaire"
+    toc-location: left
+    number-sections: true
     code-fold: true
     code-tools: true
+    code-summary: "Voir le code"
+    fig-align: center
+    fig-width: 10
+    fig-height: 6
+    embed-resources: true
+    css: styles.css
 execute:
   warning: false
   message: false
@@ -11,6 +26,9 @@ execute:
 ---
 
 ```{r}
+#| label: setup
+#| include: false
+
 library(tidyverse)
 library(lubridate)
 library(readxl)
@@ -18,42 +36,70 @@ library(TraMineR)
 library(umap)
 library(plotly)
 library(cluster)
+library(WeightedCluster)
+library(fpc)
+library(knitr)
+library(kableExtra)
+```
 
-# ── 1. Chargement ────────────────────────────────────────────
-df <- suppressWarnings(read_excel("data/tous_les_parcours_patients.xlsx")) %>%
+# Chargement et préparation des données
+
+## Importation
+
+```{r}
+#| label: chargement
+
+df <- suppressWarnings(
+  read_excel("data/tous_les_parcours_patients.xlsx")
+) %>%
   mutate(
     date_debut = as.Date(if_else(TYPE == "Hospitalisation", HOS_EXE_SOI_DTD, EXE_SOI_DTD)),
     date_fin   = as.Date(if_else(TYPE == "Hospitalisation", HOS_EXE_SOI_DTF, EXE_SOI_DTF))
   )
+```
 
-# ── 2. Codage de l'état de chaque acte ───────────────────────
-# Priorité : H1 > H2 > T > M > I > P > PH > L > S
+## Codage des états
+
+Chaque acte de soin est associé à un état selon la hiérarchie suivante :
+`H1` (hospit. cardiaque) > `H2` (hospit. autre) > `T` (téléconsultation) > `M` (médecin généraliste) > `I` (infirmier) > `P` (paramédical) > `PH` (pharmacie) > `L` (laboratoire) > `S` (spécialiste).
+
+```{r}
+#| label: codage-etats
+
 df <- df %>%
   mutate(etat = case_when(
-    TYPE == "Hospitalisation" & str_starts(as.character(GRG_GHM), "05") ~ "H1",  # hospit. cardiaque
-    TYPE == "Hospitalisation"                                            ~ "H2",  # hospit. autre
-    PRS_NAT_REF %in% c(1192, 1191, 1086)                                ~ "T",   # téléconsultation
-    PRS_NAT_REF == 1110                                                  ~ "M",   # médecin généraliste
-    PSE_ACT_NAT == 24                                                    ~ "I",   # infirmier
-    PSE_ACT_NAT %in% c(26, 21)                                          ~ "P",   # paramédical
-    PSE_ACT_NAT == 50                                                    ~ "PH",  # pharmacie
-    PSE_ACT_NAT == 30                                                    ~ "L",   # laboratoire
-    PSE_SPE_COD %in% c(22, 23, 12, 15, 33)                             ~ "S",   # spécialiste
+    TYPE == "Hospitalisation" & str_starts(as.character(GRG_GHM), "05") ~ "H1",
+    TYPE == "Hospitalisation"                                            ~ "H2",
+    PRS_NAT_REF %in% c(1192, 1191, 1086)                                ~ "T",
+    PRS_NAT_REF == 1110                                                  ~ "M",
+    PSE_ACT_NAT == 24                                                    ~ "I",
+    PSE_ACT_NAT %in% c(26, 21)                                          ~ "P",
+    PSE_ACT_NAT == 50                                                    ~ "PH",
+    PSE_ACT_NAT == 30                                                    ~ "L",
+    PSE_SPE_COD %in% c(22, 23, 12, 15, 33)                             ~ "S",
     TRUE                                                                 ~ NA_character_
   )) %>%
   filter(!is.na(etat))
+```
 
-# ── 3. Origine = 1ère hospitalisation cardiaque (H1) ─────────
+## Construction des trajectoires hebdomadaires
+
+L'origine temporelle est fixée à la date de la **première hospitalisation cardiaque (H1)**.
+Le suivi couvre les **52 semaines** suivantes (S0–S51).
+
+```{r}
+#| label: trajectoires
+
+# Origine = 1ère hospitalisation cardiaque
 df <- df %>%
   group_by(NUM_ENQ) %>%
-  filter(any(etat == "H1")) %>%          # garder seulement les patients H1
+  filter(any(etat == "H1")) %>%
   mutate(date_origine = min(date_debut[etat == "H1"], na.rm = TRUE)) %>%
   ungroup() %>%
   mutate(semaine = as.integer(floor(as.numeric(date_debut - date_origine) / 7))) %>%
-  filter(between(semaine, 0, 51))        # 1 an de suivi (S0–S51)
+  filter(between(semaine, 0, 51))
 
-# ── 4. État par semaine (combinaisons possibles) ─────────────
-# Ex. : si H1 et PH la même semaine → "H1+PH"
+# Combinaison des états intra-semaine
 combiner_etats <- function(etats) {
   etats <- sort(unique(etats))
   if ("H1" %in% etats) return(paste(c("H1", setdiff(etats, "H1")), collapse = "+"))
@@ -64,8 +110,15 @@ combiner_etats <- function(etats) {
 df_semaine <- df %>%
   group_by(NUM_ENQ, semaine) %>%
   summarise(etat_semaine = combiner_etats(etat), .groups = "drop")
+```
 
-# ── 5. Ajout de l'état F (fin de suivi : décès ou sortie) ────
+## Gestion de la fin de suivi
+
+L'état `F` (fin de suivi) est attribué à partir de la semaine de décès ou de sortie du patient, jusqu'à S51. Les semaines sans acte sont codées `R` (repos / aucun acte enregistré).
+
+```{r}
+#| label: fin-suivi
+
 DATE_FIN_SUIVI <- as.Date("2025-01-01")
 
 fin_suivi <- df %>%
@@ -86,69 +139,89 @@ fin_suivi <- df %>%
   ) %>%
   filter(between(sem_fin, 0, 51), date_fin_patient < DATE_FIN_SUIVI)
 
-# Générer les lignes "F" de sem_fin à S51 pour chaque patient sorti
 rows_F <- fin_suivi %>%
   rowwise() %>%
   reframe(NUM_ENQ = NUM_ENQ, semaine = seq(sem_fin, 51L), etat_semaine = "F")
 
-# Fusionner : les actes réels ont la priorité sur F
 df_semaine <- df_semaine %>%
   anti_join(rows_F, by = c("NUM_ENQ", "semaine")) %>%
   bind_rows(rows_F) %>%
   arrange(NUM_ENQ, semaine)
-# ── 6. Format large : 1 ligne par patient, 1 colonne par semaine ─
+```
+
+## Format matriciel et population finale
+
+```{r}
+#| label: format-large
+
 col_sem <- paste0("S", 0:51)
 
 df_wide <- df_semaine %>%
-  # On s'assure une dernière fois que S0 est H1 dans les données long
   mutate(etat_semaine = if_else(semaine == 0, "H1", etat_semaine)) %>%
   pivot_wider(
-    names_from = semaine, 
-    names_prefix = "S", 
-    values_from = etat_semaine, 
-    values_fn = first
+    names_from   = semaine,
+    names_prefix = "S",
+    values_from  = etat_semaine,
+    values_fn    = first
   ) %>%
-  # Gestion des colonnes manquantes
   { for (col in col_sem) if (!col %in% names(.)) .[[col]] <- NA_character_; . } %>%
   select(NUM_ENQ, all_of(col_sem)) %>%
-  # Remplissage des vides par "R"
   mutate(across(all_of(col_sem), ~ replace_na(., "R"))) %>%
-  # SÉCURITÉ : On force la colonne S0 à "H1" pour tout le monde
-  mutate(S0 = "H1") 
+  mutate(S0 = "H1")
 
-# On identifie les patients qui n'ont QUE "R" ou "F" de S1 à S51
+# Exclusion des patients sans aucun acte entre S1 et S51
 indices_suivi <- apply(df_wide[, paste0("S", 1:51)], 1, function(x) {
   any(!(x %in% c("R", "F")))
 })
-
-# On filtre le tableau
 df_wide <- df_wide[indices_suivi, ]
 
-# ── Résumé ───────────────────────────────────────────────────
-alphabet <- sort(unique(unlist(df_wide[col_sem])))
-cat("Patients inclus :", nrow(df_wide), "\n")
-cat("États distincts :", length(alphabet), "(dont", sum(str_detect(alphabet, "\\+")), "combinaisons)\n")
+alphabet_states <- sort(unique(unlist(df_wide[col_sem])))
+n_combinaisons  <- sum(str_detect(alphabet_states, "\\+"))
 ```
 
+::: {.callout-note}
+**Population incluse :** `r nrow(df_wide)` patients · **États distincts :** `r length(alphabet_states)` (dont `r n_combinaisons` combinaisons d'états)
+:::
+
+---
+
+# Analyse de séquences (TraMineR)
+
+## Construction de l'objet séquence et calcul des distances
+
+La distance entre trajectoires est calculée par **Optimal Matching (OM)** avec des coûts de substitution estimés à partir des taux de transition observés (`TRATE`).
+
 ```{r}
-
-col_sem <- paste0("S", 0:51)
-
-# ── 1. Construction de l'objet séquence TraMineR ─────────────
+#| label: sequences-om
 
 seq.ic <- seqdef(
-  data     = df_wide,
-  var      = col_sem,
+  data = df_wide,
+  var  = col_sem
 )
 
-cost_trate <- seqsubm(seq.ic, method = "TRATE")
-distance.matrix = seqdist(seq.ic, method ="OM", sm = cost_trate)
+cost_trate      <- seqsubm(seq.ic, method = "TRATE")
+distance.matrix <- seqdist(seq.ic, method = "OM", sm = cost_trate)
+```
 
-ward.hclust = hclust(as.dist(distance.matrix), method = "ward.D2")
-plot(ward.hclust)
+## Clustering hiérarchique (Ward)
 
-k_final = 3
-cluster.solution = cutree(ward.hclust, k = k_final)
+```{r}
+#| label: clustering
+#| fig-cap: "Dendrogramme — classification hiérarchique (Ward.D2)"
+
+ward.hclust <- hclust(as.dist(distance.matrix), method = "ward.D2")
+plot(ward.hclust,
+     labels = FALSE,
+     xlab   = "Patients",
+     ylab   = "Distance OM",
+     main   = "Dendrogramme — Ward.D2",
+     sub    = "")
+
+k_final <- 3
+abline(h = ward.hclust$height[length(ward.hclust$height) - k_final + 1],
+       col = "firebrick", lty = 2, lwd = 1.5)
+legend("topright", legend = paste0("Coupure k = ", k_final),
+       col = "firebrick", lty = 2, bty = "n")
 
 df_wide$cluster <- factor(
   cutree(ward.hclust, k_final),
@@ -156,39 +229,93 @@ df_wide$cluster <- factor(
 )
 ```
 
+---
+
+# Qualité et stabilité du clustering
+
+## Indices de qualité
+
 ```{r}
-# Calcul de la qualité
-library(WeightedCluster)
-stats <- wcClusterQuality(as.dist(distance.matrix), df_wide$cluster)
-print(stats$stats)
+#| label: qualite-clustering
 
-# Calcul de la distance moyenne au centre pour chaque cluster
-# (Indice de cohésion intra-cluster)
-diss_stats <- dissassoc(as.dist(distance.matrix), df_wide$cluster)
-print(diss_stats)
+stats    <- wcClusterQuality(as.dist(distance.matrix), df_wide$cluster)
+df_stats <- as.data.frame(t(stats$stats)) %>%
+  rownames_to_column("Indice") %>%
+  mutate(across(where(is.numeric), ~ round(.x, 4)))
 
-library(fpc)
-# Stabilité via Bootstrap (mesure de Jaccard)
-# Un score > 0.75 indique un cluster très stable
-stability <- clusterboot(as.dist(distance.matrix), 
-                        B = 50, # nombre de répétitions
-                        bootmethod = "boot",
-                        clustermethod = hclustCBI, 
-                        method = "ward.D2", 
-                        k = k_final)
-print(stability$bootmean)
+kable(df_stats,
+      col.names = c("Indice", "Valeur"),
+      caption   = "Indices de qualité du clustering") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
+                full_width = FALSE)
 ```
 
+## Cohésion intra-cluster
+
 ```{r}
-library(plotly)
+#| label: cohesion
+
+diss_stats <- dissassoc(as.dist(distance.matrix), df_wide$cluster)
+
+df_diss <- as.data.frame(diss_stats$stats) %>%
+  rownames_to_column("Cluster") %>%
+  mutate(across(where(is.numeric), ~ round(.x, 3)))
+
+kable(df_diss,
+      caption = "Distance moyenne au centre par cluster") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
+                full_width = FALSE)
+```
+
+## Stabilité par bootstrap
+
+Un score de Jaccard **> 0.75** indique un cluster très stable (Hennig, 2007).
+
+```{r}
+#| label: stabilite
+
+stability <- clusterboot(
+  as.dist(distance.matrix),
+  B             = 50,
+  bootmethod    = "boot",
+  clustermethod = hclustCBI,
+  method        = "ward.D2",
+  k             = k_final
+)
+
+data.frame(
+  Cluster      = paste("Cluster", 1:k_final),
+  Jaccard_moyen = round(stability$bootmean, 3),
+  Stabilite    = ifelse(stability$bootmean > 0.75, "✔ Stable", "⚠ Instable")
+) %>%
+  kable(caption = "Stabilité bootstrap (50 répétitions)") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
+                full_width = FALSE) %>%
+  column_spec(3, bold = TRUE,
+              color = ifelse(stability$bootmean > 0.75, "darkgreen", "firebrick"))
+```
+
+---
+
+# Visualisation
+
+## Projection UMAP 3D
+
+```{r}
+#| label: umap-3d
+#| fig-cap: "Projection UMAP 3D des distances OM — colorée par cluster"
+
 set.seed(42)
-umap_visu_3d <- umap(as.matrix(distance.matrix), config = modifyList(umap.defaults, list(
-  input        = "dist",
-  n_components = 3,    # Changement ici pour 3 dimensions
-  n_neighbors  = 15,
-  min_dist     = 0.1,
-  random_state = 42
-)))
+umap_visu_3d <- umap(
+  as.matrix(distance.matrix),
+  config = modifyList(umap.defaults, list(
+    input        = "dist",
+    n_components = 3,
+    n_neighbors  = 15,
+    min_dist     = 0.1,
+    random_state = 42
+  ))
+)
 
 df_visu_3d <- data.frame(
   UMAP1   = umap_visu_3d$layout[, 1],
@@ -198,56 +325,52 @@ df_visu_3d <- data.frame(
   Patient = df_wide$NUM_ENQ
 )
 
-
-plot_ly(df_visu_3d, 
-        x = ~UMAP1, 
-        y = ~UMAP2, 
-        z = ~UMAP3, 
-        color = ~Cluster, 
-        colors = "Set1", # Ou votre palette préférée
-        type = "scatter3d", 
-        mode = "markers",
+plot_ly(df_visu_3d,
+        x = ~UMAP1, y = ~UMAP2, z = ~UMAP3,
+        color  = ~Cluster,
+        colors = "Set1",
+        type   = "scatter3d",
+        mode   = "markers",
         marker = list(size = 3, opacity = 0.7),
-        text = ~paste("Patient :", Patient)) %>%
+        text   = ~paste("Patient :", Patient)) %>%
   layout(
-    title = paste0("UMAP 3D — distance OM (k = ", k_final, ")"),
+    title = list(text = paste0("UMAP 3D — distance OM (k = ", k_final, ")"), x = 0.05),
     scene = list(
       xaxis = list(title = "UMAP 1"),
       yaxis = list(title = "UMAP 2"),
       zaxis = list(title = "UMAP 3")
-    )
+    ),
+    legend = list(title = list(text = "Cluster"))
   )
+```
 
-  # 1. On récupère l'alphabet actuel (ex: "F", "H", "R", "S")
-  mon_alphabet <- alphabet(seq.ic)
-  
-  # 2. On récupère la palette de couleurs actuelle
-  ma_palette <- cpal(seq.ic)
-  
-  # 3. On nomme le vecteur pour être sûr de modifier la bonne lettre
-  names(ma_palette) <- mon_alphabet
-  
-  # 4. On change les couleurs pour F et R (utilisez des noms ou des codes Hexa)
-  # Exemple : F en "firebrick" (rouge foncé) et R en "royalblue" (bleu)
-  ma_palette["F"] <- "firebrick"
-  ma_palette["R"] <- "royalblue"
-  
-  # 5. On réinjecte la palette modifiée dans l'objet de séquence
-  cpal(seq.ic) <- as.vector(ma_palette)
+## Séquences fréquentes par cluster
 
-  
-# ── 7. Visualisation des séquences par cluster ───────────────
+```{r}
+#| label: seqplots
+#| fig-height: 5
+#| results: asis
+
+# Personnalisation des couleurs pour F et R
+mon_alphabet <- alphabet(seq.ic)
+ma_palette   <- cpal(seq.ic)
+names(ma_palette) <- mon_alphabet
+ma_palette["F"] <- "firebrick"
+ma_palette["R"] <- "royalblue"
+cpal(seq.ic) <- as.vector(ma_palette)
+
 for (cl in levels(df_wide$cluster)) {
   idx  <- which(df_wide$cluster == cl)
   n_cl <- length(idx)
 
-  layout(matrix(1:2, 2), heights = c(0.7, 0.3))
+  cat(paste0("\n### ", cl, " (n = ", n_cl, ")\n\n"))
 
+  layout(matrix(1:2, 2), heights = c(0.75, 0.25))
   par(mar = c(4, 4, 3, 1))
   seqfplot(
     seq.ic[idx, ],
-    title       = paste0(cl, " — OM (n = ", n_cl, ")"),
-    xlab        = "Semaines depuis 1ère hospit. IC",
+    title       = paste0(cl, " — 30 séquences les plus fréquentes"),
+    xlab        = "Semaines depuis 1ère hospit. cardiaque",
     idxs        = 1:30,
     border      = NA,
     with.legend = FALSE
@@ -257,30 +380,57 @@ for (cl in levels(df_wide$cluster)) {
   legend("center",
          legend = attr(seq.ic, "labels"),
          fill   = attr(seq.ic, "cpal"),
-         ncol   = 4, cex = 0.85, bty = "n", title = "États")
+         ncol   = 5, cex = 0.8, bty = "n",
+         title  = "États")
 }
+```
 
-# ── 8. Description socio-démographique des clusters ──────────
+---
+
+# Description des clusters
+
+```{r}
+#| label: description-socio
+
 vars_patient <- df %>%
   group_by(NUM_ENQ) %>%
   summarise(
     annee_naissance = first(na.omit(BEN_NAI_ANN)),
     sexe            = first(na.omit(BEN_SEX_COD)),
     cout_total      = sum(PRS_PAI_MNT, na.rm = TRUE),
-    .groups = "drop"
+    .groups         = "drop"
   )
 
-df_wide %>%
+df_desc <- df_wide %>%
   select(NUM_ENQ, cluster) %>%
   inner_join(vars_patient, by = "NUM_ENQ") %>%
   group_by(cluster) %>%
   summarise(
-    n            = n(),
-    age_moyen    = mean(annee_naissance,    na.rm = TRUE),
-    age_sd       = sd(annee_naissance,      na.rm = TRUE),
-    pct_femmes   = mean(sexe == 2,          na.rm = TRUE) * 100,
-    cout_median  = median(cout_total,       na.rm = TRUE),
-    cout_q1      = quantile(cout_total, 0.25, na.rm = TRUE),
-    cout_q3      = quantile(cout_total, 0.75, na.rm = TRUE)
+    N               = n(),
+    `Âge moyen (an)`      = round(mean(annee_naissance, na.rm = TRUE), 1),
+    `Âge (ET)`            = round(sd(annee_naissance, na.rm = TRUE), 1),
+    `% Femmes`            = round(mean(sexe == 2, na.rm = TRUE) * 100, 1),
+    `Coût médian (€)`     = round(median(cout_total, na.rm = TRUE), 0),
+    `Q1 coût (€)`         = round(quantile(cout_total, 0.25, na.rm = TRUE), 0),
+    `Q3 coût (€)`         = round(quantile(cout_total, 0.75, na.rm = TRUE), 0),
+    .groups = "drop"
   )
+
+kable(df_desc,
+      caption = "Description socio-démographique et économique par cluster") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
+                full_width = TRUE) %>%
+  column_spec(1, bold = TRUE)
 ```
+
+---
+
+::: {.callout-tip collapse="true"}
+## Informations techniques
+
+- **Distance** : Optimal Matching (OM) avec coûts TRATE  
+- **Algorithme** : Classification hiérarchique Ward.D2  
+- **Nombre de clusters** : `r k_final`  
+- **Horizon de suivi** : 52 semaines (S0–S51) depuis la 1ère hospitalisation cardiaque  
+- **Logiciels** : R `r R.version$major`.`r R.version$minor`, TraMineR, WeightedCluster, fpc, umap, plotly
+:::
